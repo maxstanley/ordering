@@ -1,0 +1,43 @@
+version: '3.2'
+
+services:
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: "ORDER_MANAGEMENT"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - "./database/init/:/docker-entrypoint-initdb.d/"
+      # - "./database/init/00-users.js:/docker-entrypoint-initdb.d/00-users.js"
+      # - "./database/init/10-Product.js:/docker-entrypoint-initdb.d/10.js"
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  api:
+    build:
+      context: ./api/
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000/tcp"
+    volumes:
+      - "./api/src/:/usr/src/app/src/"
+    depends_on:
+      - mongo
+    environment:
+      NODE_ENV: "docker"
+      DATABASE_HOST: "mongodb://mongo:27017/ORDER_MANAGEMENT"
+      DATABASE_NAME: "ORDER_MANAGEMENT"
+      DATABASE_USER: "app"
+      DATABASE_PASSWORD: "app_secret"
+      HASH_ALGORITHM: "sha512"
+      COOKIE_DOMAIN: "localhost"
+      PRIVATE_KEY: ""
+      PUBLIC_KEY: ""
