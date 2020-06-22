@@ -41,3 +41,17 @@ services:
       COOKIE_DOMAIN: "localhost"
       PRIVATE_KEY: ""
       PUBLIC_KEY: ""
+
+  webapp:
+    build:
+      context: ./webapp/
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "80:3000/tcp"
+    volumes:
+      - "./webapp/src/:/usr/src/app/src/"
+      - "./webapp/public/:/usr/src/app/public/"
+    stdin_open: true
+    depends_on:
+      - api
