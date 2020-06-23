@@ -7,6 +7,7 @@ export interface BasketItem {
   Name: string;
   Quantity: number;
   Measure: string;
+  Price: number;
 }
 
 export default Basket;

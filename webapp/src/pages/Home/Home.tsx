@@ -46,6 +46,14 @@ const products: any = {
         "125ml": "3.60",
         "250ml": "5.10"
       }
+    },
+    {
+      ID: "3",
+      name: "Prosesseco",
+      measures: {
+        "125ml": "1.60",
+        "250ml": "2.10"
+      }
     }
   ],
   Beer: [

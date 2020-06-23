@@ -10,19 +10,19 @@ import {
   Remove as RemoveIcon
 } from "@material-ui/icons";
 
-import Basket, { BasketItem } from "../../../../types/Basket";
-import Product from "../../../../types/Product";
+import Basket, { BasketItem } from "../../types/Basket";
 
 interface Props {
-  product: Product;
+  productID: string;
+  productName: string;
   measure: string;
-  price: string;
+  price: number;
   basket: Basket;
   updateBasketItem: (basketItem: BasketItem) => void;
 }
 
-function ProductDetails(props: Props) {
-  const { product, measure, price, basket, updateBasketItem } = props;
+function ProductMeasure(props: Props) {
+  const { productName, productID, measure, price, basket, updateBasketItem } = props;
 
   const [ quantity, setQuantity ] = useState<number>(0);
 
@@ -38,11 +38,14 @@ function ProductDetails(props: Props) {
     const updateItem = () => {
       if (quantity === 0) { return; }
       const basketItem: BasketItem = {
-        ProductID: product.ID + measure,
-        Name: product.name,
+        ProductID: productID,
+        Name: productName,
         Quantity: quantity,
-        Measure: measure
+        Measure: measure,
+        Price: price
       };
+
+      console.log(basketItem)
   
       updateBasketItem(basketItem);
     };
@@ -51,9 +54,12 @@ function ProductDetails(props: Props) {
   }, [quantity]);
 
   useEffect(() => {
-    if (basket[product.ID + measure]) {
-      setQuantity(basket[product.ID + measure].Quantity);
+    console.log(basket, productID)
+    if (basket[productID]) {
+      console.log(basket[productID].Quantity);
+      setQuantity(basket[productID].Quantity);
     }
+
   }, []);
 
   return (
@@ -86,4 +92,4 @@ function ProductDetails(props: Props) {
   )
 }
 
-export default ProductDetails;
+export default ProductMeasure;

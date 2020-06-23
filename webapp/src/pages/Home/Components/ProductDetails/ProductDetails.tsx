@@ -12,7 +12,7 @@ import {
 import Basket, { BasketItem } from "../../../../types/Basket";
 import Product from "../../../../types/Product";
 
-import ProductMeasure from "../ProductMeasure/ProductMeasure";
+import ProductMeasure from "../../../../Components/ProductMeasure/ProductMeasure";
 
 import "./ProductDetails.css";
 
@@ -37,7 +37,14 @@ function ProductDetails(props: Props) {
         <div>
           {Object.keys(product.measures).map((measure) => {
             return (
-              <ProductMeasure measure={measure} price={product.measures[measure]} product={product} basket={basket} updateBasketItem={updateBasketItem} />
+              <ProductMeasure
+                basket={basket}
+                measure={measure}
+                price={product.measures[measure]}
+                updateBasketItem={updateBasketItem}
+                productName={product.name}
+                productID={product.ID + measure}
+              />
             )
           })}
         </div>

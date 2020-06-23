@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Badge,
@@ -37,15 +38,18 @@ function NavBar(props: Props) {
     >
       <MenuItem
         onClick={toggleMenu}
-        href="/"
+        component={Link}
+        to="/"
       >Home</MenuItem>
       <MenuItem
         onClick={toggleMenu}
-        href="/order"
+        component={Link}
+        to="/order"
       >Orders</MenuItem>
       <MenuItem
         onClick={toggleMenu}
-        href="/account"
+        component={Link}
+        to="/account"
       >Account</MenuItem>
     </Menu>
   );
@@ -70,17 +74,19 @@ function NavBar(props: Props) {
             Ordering
           </Typography>
           <div className="rightToolbar">
-            <IconButton
-              aria-label="basket"
-            >
-              <Badge
-                color="secondary"
-                badgeContent={basketQuantity}
-                max={999}
+            <Link to="/basket">
+              <IconButton
+                aria-label="basket"
               >
-                <BasketIcon />
-              </Badge>
-            </IconButton>
+                <Badge
+                  color="secondary"
+                  badgeContent={basketQuantity}
+                  max={999}
+                >
+                  <BasketIcon />
+                </Badge>
+              </IconButton>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>
