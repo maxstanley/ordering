@@ -1,0 +1,13 @@
+Input {
+  text-align: center;
+}
+
+.description {
+  vertical-align: middle;
+  padding: 1;
+  justify-content: center;
+}
+
+.container {
+  align-items: center;
+}
