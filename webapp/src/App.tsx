@@ -23,8 +23,9 @@ function App() {
     let totalQuantity = 0;
     let totalPrice = 0;
     Object.keys(basket).forEach((productID: string) => {
-      totalQuantity += basket[productID].Quantity;
-      totalPrice += +basket[productID].Price;
+      const productQuantity = basket[productID].Quantity
+      totalQuantity += productQuantity;
+      totalPrice += +basket[productID].Price * productQuantity;
     });
     setBasketQuantity(totalQuantity);
     setBasketTotal(totalPrice);

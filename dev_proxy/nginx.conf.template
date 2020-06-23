@@ -1,0 +1,34 @@
+upstream api {
+    server $API_HOST fail_timeout=5s max_fails=5;
+}
+
+upstream webapp {
+    server $REACT_HOST fail_timeout=5s max_fails=5;
+}
+
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+
+    index  index.html index.htm;
+
+    location /api/ {
+        rewrite /api/(.*) /$1 break;
+        proxy_pass http://api;
+    }
+
+    location / {
+        rewrite /(.*) /$1 break;
+        proxy_pass http://webapp;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}

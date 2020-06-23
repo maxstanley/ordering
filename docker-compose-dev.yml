@@ -47,11 +47,27 @@ services:
       context: ./webapp/
       dockerfile: Dockerfile.dev
     restart: unless-stopped
-    ports:
-      - "80:3000/tcp"
+    environment:
+      REACT_APP_API_URL: "/api"
     volumes:
       - "./webapp/src/:/usr/src/app/src/"
       - "./webapp/public/:/usr/src/app/public/"
     stdin_open: true
     depends_on:
       - api
+
+  dev_proxy:
+    build:
+      context: ./dev_proxy/
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "80:80/tcp"
+    environment:
+      API_HOST: "api:3000"
+      REACT_HOST: "webapp:3000"
+      DOMAIN: "localhost"
+    depends_on:
+      - api
+      - webapp
+    
