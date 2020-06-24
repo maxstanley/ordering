@@ -28,7 +28,7 @@ class ProductController implements IController {
 
   getAllProducts = async (request: Request, response: Response) => {
     const products = await getAllProducts();
-    return response.json(products).status(HTTPStatus.OK).send();
+    return response.status(HTTPStatus.OK).json(products);
   }
 }
 

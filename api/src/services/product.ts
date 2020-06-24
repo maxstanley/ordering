@@ -26,6 +26,7 @@ const getAllProducts = async () => {
       output[category._id].push(product);
     });
   });
+  
   return output;
 }
 
