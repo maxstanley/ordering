@@ -7,11 +7,20 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
-  name: {
+  Name: {
     type: String,
     required: true,
     trim: true,
   },
+  Category: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  Measures: {
+    type: Map,
+    of: String
+  }
 });
 
 const Product = model<TProduct>("Product", productSchema, "Product");

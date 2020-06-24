@@ -7,6 +7,7 @@ import IController from "./interfaces/IController";
 import TokenClaim from "./types/TokenClaim";
 
 import ProductController from "./controllers/ProductController";
+import OrderController from "./controllers/OrderController";
 
 import App from "./App";
 
@@ -23,11 +24,13 @@ const PORT = 3000;
 // List of Controllers
 const controllers: IController[] = [
   new ProductController(),
+  new OrderController(),
 ];
 
 // List of Middleware
 const middleware: RequestHandler[] = [
   cookieParser(),
+  bodyParser.urlencoded({ extended: false }),
   bodyParser.json(),
 ];
 

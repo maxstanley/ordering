@@ -2,9 +2,9 @@ import { Document } from 'mongoose';
 
 interface Product extends Document {
   ID: string;
-  name: string;
+  Name: string;
   Category: string;
-  measures: {
+  Measures: {
     [measure: string]: string;
   };
 };

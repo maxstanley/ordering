@@ -44,8 +44,6 @@ function ProductMeasure(props: Props) {
         Measure: measure,
         Price: price
       };
-
-      console.log(basketItem)
   
       updateBasketItem(basketItem);
     };
@@ -54,9 +52,7 @@ function ProductMeasure(props: Props) {
   }, [quantity]);
 
   useEffect(() => {
-    console.log(basket, productID)
     if (basket[productID]) {
-      console.log(basket[productID].Quantity);
       setQuantity(basket[productID].Quantity);
     }
 

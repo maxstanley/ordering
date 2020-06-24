@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from './Components/NavBar/NavBar';
 import Home from "./pages/Home/Home";
 import Basket from "./pages/Basket/Basket";
+import Orders from "./pages/Orders/Orders";
 import TBasket, { BasketItem } from './types/Basket';
 
 import './App.css';
@@ -13,7 +14,11 @@ function App() {
   const [ basketQuantity, setBasketQuantity ] = useState<number>(0);
   const [ basketTotal, setBasketTotal ] = useState<number>(0);
 
-  const updateBasketItem = (basketItem: BasketItem) => {
+  const updateBasketItem = (basketItem?: BasketItem) => {
+    if (!basketItem) {
+      setBasket({});
+      return;
+    }
     let newBasket = Object.assign({}, basket);
     newBasket[basketItem.ProductID] = basketItem;
     setBasket(newBasket);
@@ -29,7 +34,6 @@ function App() {
     });
     setBasketQuantity(totalQuantity);
     setBasketTotal(totalPrice);
-    console.log(basket)
   }, [basket]);
   
   return (
@@ -42,6 +46,9 @@ function App() {
           </Route>
           <Route exact path="/basket">
             <Basket basket={basket} updateBasketItem={updateBasketItem} basketTotal={basketTotal} />
+          </Route>
+          <Route>
+            <Orders />
           </Route>
         </Switch>
       </Router>
