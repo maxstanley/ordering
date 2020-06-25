@@ -52,8 +52,31 @@ const options = {
 const app = new App(options);
 
 const {
-  DATABASE_HOST, DATABASE_USER, DATABASE_NAME, DATABASE_PASSWORD,
+  DATABASE_HOST,
+  DATABASE_USER,
+  DATABASE_NAME,
+  DATABASE_PASSWORD,
+  EMAIL_SMTP_SERVER,
+  EMAIL_USER,
+  EMAIL_PASS
 } = process.env;
+
+console.log(process.env);
+
+if (!EMAIL_SMTP_SERVER) {
+  console.log("EMAIL_SMTP_SERVER env Required");
+  process.exit(1);
+}
+
+if (!EMAIL_USER) {
+  console.log("EMAIL_USER env Required");
+  process.exit(1);
+}
+
+if (!EMAIL_PASS) {
+  console.log("EMAIL_PASS env Required");
+  process.exit(1);
+}
 
 if (!DATABASE_HOST) {
   console.log("DATABASE_HOST env Required");

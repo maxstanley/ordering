@@ -3,6 +3,9 @@ const protectedRoutes: any = {
     account: {
       POST: false
     },
+    activate: {
+      GET: false
+    },
     login: {
       POST: false
     },

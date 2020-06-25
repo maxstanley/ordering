@@ -66,7 +66,7 @@ class AuthenticationController implements IController {
     const user = await checkAccountDetails(Email, Password);
 
     if (!user) {
-      return response.status(HTTPStatus.FORBIDDEN).send();
+      return response.status(HTTPStatus.BAD_REQUEST).send();
     }
 
     const XSRF = randomBytes(12).toString("base64");
@@ -100,7 +100,7 @@ class AuthenticationController implements IController {
     const user = await checkAccountDetails(Email, Password);
 
     if (!user) {
-      return response.status(HTTPStatus.FORBIDDEN).send();
+      return response.status(HTTPStatus.BAD_REQUEST).send();
     }
 
     const payload = {

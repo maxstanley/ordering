@@ -5,8 +5,10 @@ interface Account extends Document {
   DisplayName: string;
   Email: string;
   Password: string;
-  IsAdmin: Boolean;
+  IsAdmin?: Boolean;
   Salt?: string;
+  EmailIsValidated?: boolean;
+  ActivationID?: string;
 };
 
 export default Account;

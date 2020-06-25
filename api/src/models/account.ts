@@ -22,10 +22,19 @@ const accountSchema = new Schema({
   },
   IsAdmin: {
     type: Boolean,
-    required: true,
-    trim: true,
+    required: false,
+    default: false,
   },
   Salt: {
+    type: String,
+    required: false,
+  },
+  EmailIsValidated: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  ActivationID: {
     type: String,
     required: false,
   }
@@ -37,7 +46,7 @@ accountSchema.pre<TAccount>('save', function(next) {
 
   const salt = randomBytes(12).toString("base64");
 
-  const hasher = createHash(process.env.HASH_ALOGRITHM || "sha512");
+  const hasher = createHash(process.env.HASH_ALGORITHM || "sha512");
   const passwordHash = hasher.update(this.Password + salt, "utf8");
   this.Password = passwordHash.digest("hex");
   this.Salt = salt;
@@ -45,7 +54,7 @@ accountSchema.pre<TAccount>('save', function(next) {
 });
 
 accountSchema.methods.comparePassword = function comparePassword (candidatePassword: any) {
-  const hasher = createHash(process.env.HASH_ALOGRITHM || "sha512");
+  const hasher = createHash(process.env.HASH_ALGORITHM || "sha512");
   const passwordHash = hasher.update(candidatePassword + this.Salt, "utf8");
   const hexPassword = passwordHash.digest("hex");
   

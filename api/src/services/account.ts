@@ -1,13 +1,15 @@
+
 import Account from "../models/account";
 
 import { createHash, randomBytes } from "crypto";
 
-const createAccount = async (DisplayName: string, Email: string, Password: string, IsAdmin: Boolean) => {
+const createAccount = async (DisplayName: string, Email: string, Password: string, IsAdmin: Boolean, ActivationID: string) => {
   await Account.create({
     DisplayName,
     Email,
     Password,
-    IsAdmin
+    IsAdmin,
+    ActivationID
   });
 }
 
@@ -21,6 +23,16 @@ const checkAccountDetails = async (Email: string, Password: string) => {
   }
   return undefined;
 }
+
+const activateAccount = async (ActivationID: string) => {
+  await Account.findOneAndUpdate({ ActivationID }, {
+    $set: {
+      EmailIsValidated: true
+    }
+  });
+
+  return;
+};
 
 const hashString = (string: string, salt?: string) => {
   if (!salt) {
@@ -37,6 +49,7 @@ const hashString = (string: string, salt?: string) => {
 }
 
 export {
+  activateAccount,
   createAccount,
   checkAccountDetails,
   hashString

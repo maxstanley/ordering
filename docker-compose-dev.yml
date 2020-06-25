@@ -8,10 +8,10 @@ services:
       MONGO_INITDB_DATABASE: "ORDER_MANAGEMENT"
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+      ADMIN_EMAIL: ""
+      ADMIN_PASS: ""
     volumes:
       - "./database/init/:/docker-entrypoint-initdb.d/"
-      # - "./database/init/00-users.js:/docker-entrypoint-initdb.d/00-users.js"
-      # - "./database/init/10-Product.js:/docker-entrypoint-initdb.d/10.js"
   mongo-express:
     image: mongo-express
     restart: always
@@ -36,6 +36,9 @@ services:
       DATABASE_NAME: "ORDER_MANAGEMENT"
       DATABASE_USER: "app"
       DATABASE_PASSWORD: "app_secret"
+      EMAIL_SMTP_SERVER: ""
+      EMAIL_USER: ""
+      EMAIL_PASS: ""
       HASH_ALGORITHM: "sha512"
       COOKIE_DOMAIN: "localhost"
       PRIVATE_KEY: ""
