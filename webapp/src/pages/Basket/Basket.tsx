@@ -5,16 +5,18 @@ import { useHistory } from "react-router-dom";
 
 import ProductMeasure from "../../Components/ProductMeasure/ProductMeasure";
 import TBasket, { BasketItem } from "../../types/Basket";
+import Account from "../../types/Account";
 import { checkoutBasket } from "../../services/basket";
 
 interface Props {
+  account: Account | undefined;
   basket: TBasket;
   basketTotal: number;
   updateBasketItem: (basketItem?: BasketItem) => void;
 }
 
 function Basket(props: Props) {
-  const { basket, updateBasketItem, basketTotal } = props;
+  const { account, basket, updateBasketItem, basketTotal } = props;
   const history = useHistory();
 
   const handleCheckout = async () => {
@@ -22,8 +24,13 @@ function Basket(props: Props) {
       history.push('/');
       return;
     }
+
+    if (!account) {
+      history.push("/login?redirect=basket");
+      return;
+    }
     
-    const checkedOut = await checkoutBasket("543", basket);
+    const checkedOut = await checkoutBasket(account.AccountID, basket);
 
     if (checkedOut) {
       updateBasketItem(undefined);

@@ -6,15 +6,19 @@ import { connect, ConnectionOptions } from "mongoose";
 import IController from "./interfaces/IController";
 import TokenClaim from "./types/TokenClaim";
 
-import ProductController from "./controllers/ProductController";
+import Authentication from "./middleware/Authenticate";
+
+import AccountController from "./controllers/AccountController";
+import AuthenticationController from "./controllers/AuthenticationController";
 import OrderController from "./controllers/OrderController";
+import ProductController from "./controllers/ProductController";
 
 import App from "./App";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: TokenClaim
+      account?: TokenClaim
     }
   }
 }
@@ -23,8 +27,10 @@ const PORT = 3000;
 
 // List of Controllers
 const controllers: IController[] = [
-  new ProductController(),
+  new AccountController(),
+  new AuthenticationController(),
   new OrderController(),
+  new ProductController(),
 ];
 
 // List of Middleware
@@ -32,6 +38,7 @@ const middleware: RequestHandler[] = [
   cookieParser(),
   bodyParser.urlencoded({ extended: false }),
   bodyParser.json(),
+  Authentication,
 ];
 
 // App Options

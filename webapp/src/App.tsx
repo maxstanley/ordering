@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { verify } from "jsonwebtoken";
+// import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 import NavBar from './Components/NavBar/NavBar';
 import Home from "./pages/Home/Home";
+import Account from "./pages/Account/Account";
 import Basket from "./pages/Basket/Basket";
 import Orders from "./pages/Orders/Orders";
+import TAccount from "./types/Account";
 import TBasket, { BasketItem } from './types/Basket';
 
 import './App.css';
+import { Login } from './pages/Login/Login';
+
+const publicKey: string = process.env.REACT_APP_PUBLIC_KEY!;
 
 function App() {
+  // const [ cookies ] = useCookies(["token"]);
   const [ basket, setBasket ] = useState<TBasket>({});
   const [ basketQuantity, setBasketQuantity ] = useState<number>(0);
   const [ basketTotal, setBasketTotal ] = useState<number>(0);
+  const [ account, setAccount ] = useState<TAccount | undefined>(undefined);
 
   const updateBasketItem = (basketItem?: BasketItem) => {
     if (!basketItem) {
@@ -23,6 +33,22 @@ function App() {
     newBasket[basketItem.ProductID] = basketItem;
     setBasket(newBasket);
   };
+
+  const handleAccountCookies = () => {
+    const tokenCookie = Cookies.get("token");
+
+    if (!tokenCookie) {
+      setAccount(undefined);
+      return;
+    }
+
+    if (account) {
+      return;
+    }
+
+    const token: TAccount = verify(tokenCookie, publicKey) as TAccount;
+    setAccount(token);
+  }
 
   useEffect(() => {
     let totalQuantity = 0;
@@ -44,11 +70,17 @@ function App() {
           <Route exact path="/">
             <Home basket={basket} updateBasketItem={updateBasketItem} />
           </Route>
-          <Route exact path="/basket">
-            <Basket basket={basket} updateBasketItem={updateBasketItem} basketTotal={basketTotal} />
+          <Route exact path="/account">
+            <Account account={account} handleAccountCookies={handleAccountCookies} />
           </Route>
-          <Route>
-            <Orders />
+          <Route exact path="/basket">
+            <Basket account={account} basket={basket} updateBasketItem={updateBasketItem} basketTotal={basketTotal} />
+          </Route>
+          <Route exact path="/login">
+            <Login account={account} handleAccountCookies={handleAccountCookies} />
+          </Route>
+          <Route exact path="/order">
+            <Orders account={account} />
           </Route>
         </Switch>
       </Router>

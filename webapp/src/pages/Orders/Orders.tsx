@@ -8,6 +8,7 @@ import {
 import {
   ExpandMore as ExpandMoreIcon,
 } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 
 import Loading from "../../Components/Loading/Loading";
 
@@ -16,20 +17,27 @@ import OrderRow from "./OrderRow/OrderRow";
 import { getUserOrders } from "../../services/order";
 
 import TOrder from "../../types/Order";
+import Account from "../../types/Account";
 
 interface Props {
+  account: Account | undefined;
 }
 
 function Orders(props: Props) {
+  const { account } = props;
+  const history = useHistory();
 
   const [ orders, setOrders ] = useState<TOrder[]>();
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
   // const [ totalPrice, setTotalPrice ] = useState<number>(0);
 
   useEffect(() => {
+    if (!account) {
+      return history.push("/login?redirect=order");
+    }
+
     const getData = async () => {
-      const user = "543";
-      const getOrders: TOrder[] = await getUserOrders(user);
+      const getOrders: TOrder[] = await getUserOrders(account.AccountID);
       setOrders(getOrders);
     }
 

@@ -18,13 +18,13 @@ class OrderController implements IController {
   public initRoutes() {
     // Get Order
     this.router.get("/order", this.getOrders);
+    
     // Create an order
     this.router.post("/order", this.createOrder);
   }
 
   getOrders = async (request: Request, response: Response) => {
     let orders;
-    console.log(request.url, request.query)
 
     if (request.query.UserID) {
       const { UserID } = request.query;

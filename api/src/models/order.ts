@@ -30,6 +30,6 @@ const orderSchema = new Schema({
   }]
 });
 
-const Product = model<TOrder>("Order", orderSchema, "Order");
+const Order = model<TOrder>("Order", orderSchema, "Order");
 
-export default Product;
+export default Order;

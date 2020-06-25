@@ -1,6 +1,5 @@
 type TokenClaim = {
   AccountID: string,
-  IsCustomer: string,
   IsSupplier: string,
   IsAdmin: string,
   IsActive: string,

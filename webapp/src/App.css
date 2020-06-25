@@ -1,3 +1,11 @@
 .App {
   text-align: center;
 }
+
+.textField {
+  text-align: left;
+}
+
+.signInButton {
+  margin: 10px 0 !important;
+}

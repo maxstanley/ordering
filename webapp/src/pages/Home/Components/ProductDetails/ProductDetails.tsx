@@ -14,8 +14,6 @@ import Product from "../../../../types/Product";
 
 import ProductMeasure from "../../../../Components/ProductMeasure/ProductMeasure";
 
-import "./ProductDetails.css";
-
 interface Props {
   product: Product;
   basket: Basket;

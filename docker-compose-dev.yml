@@ -27,6 +27,7 @@ services:
     restart: unless-stopped
     volumes:
       - "./api/src/:/usr/src/app/src/"
+      - "/usr/src/app/node_modules/"
     depends_on:
       - mongo
     environment:
@@ -47,9 +48,11 @@ services:
     restart: unless-stopped
     environment:
       REACT_APP_API_URL: "/api"
+      REACT_APP_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANkPLq0Y3dD3q2l6uVQBIv11P7x4SQEVjf6XDpP6UgTftzBOcRoINpfGiGLYH2G3ObvrLlHOAfdAwInlduLD4RcCAwEAAQ==\n-----END PUBLIC KEY-----"
     volumes:
       - "./webapp/src/:/usr/src/app/src/"
       - "./webapp/public/:/usr/src/app/public/"
+      - "/usr/src/app/node_modules/"
     stdin_open: true
     depends_on:
       - api
