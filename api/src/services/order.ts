@@ -1,7 +1,7 @@
 import Order from "../models/order";
 
 const getAllOrders = async () => {
-  return await Order.find({});
+  return await Order.find({}).sort({ Date: -1 });
 }
 
 const getOrderByUser = async (UserID: string) => {

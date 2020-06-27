@@ -2,6 +2,7 @@ FROM nginx:1.18-alpine
 
 RUN rm /etc/nginx/conf.d/*.conf
 COPY ./nginx.conf.template /
+COPY ./nginx.conf /
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 COPY ./docker-entrypoint.sh /entrypoint.sh

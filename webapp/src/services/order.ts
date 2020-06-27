@@ -12,3 +12,16 @@ export async function getUserOrders(userID: string) {
 
   return await response?.json();
 }
+
+export async function getAllOrders() {
+  let response;
+
+  try {
+    response = await fetch(`${URL}/v1/order`);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+
+  return await response?.json();
+}

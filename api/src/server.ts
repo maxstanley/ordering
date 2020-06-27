@@ -1,6 +1,6 @@
 import * as bodyParser from "body-parser";
-import { RequestHandler } from "express";
 import cookieParser from "cookie-parser";
+import { RequestHandler } from "express";
 import { connect, ConnectionOptions } from "mongoose";
 
 import IController from "./interfaces/IController";
@@ -60,8 +60,6 @@ const {
   EMAIL_USER,
   EMAIL_PASS
 } = process.env;
-
-console.log(process.env);
 
 if (!EMAIL_SMTP_SERVER) {
   console.log("EMAIL_SMTP_SERVER env Required");

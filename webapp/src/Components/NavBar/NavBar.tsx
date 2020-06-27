@@ -14,15 +14,18 @@ import {
   ShoppingBasket as BasketIcon
 } from "@material-ui/icons";
 
+import TAccount from "../../types/Account";
+
 import "./NavBar.css";
 
 interface Props {
   basketQuantity: number;
+  account: TAccount | undefined;
 };
 
 function NavBar(props: Props) {
 
-  const { basketQuantity } = props;
+  const { account, basketQuantity } = props;
 
   const [ isMenuOpen, setMenuOpen ] = useState(false);
 
@@ -51,6 +54,12 @@ function NavBar(props: Props) {
         component={Link}
         to="/account"
       >Account</MenuItem>
+      {(account && account.IsAdmin) ?
+      <MenuItem
+        onClick={toggleMenu}
+        component={Link}
+        to="/customerorders"
+      >View Customer Orders</MenuItem> : null  }
     </Menu>
   );
 

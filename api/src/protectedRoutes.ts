@@ -14,13 +14,19 @@ const protectedRoutes: any = {
     },
     order: {
       GET: true,
-      POST: true
+      POST: true,
+      stream: {
+        GET: true
+      },
+      "*": {
+        GET: true
+      }
     },
     product: {
       GET: false
     },
     token: {
-      POST: true
+      POST: false
     }
   }
 };

@@ -11,8 +11,7 @@ import {
 import { useHistory } from "react-router-dom";
 
 import Loading from "../../Components/Loading/Loading";
-
-import OrderRow from "./OrderRow/OrderRow";
+import OrderRow from "../../Components/OrderRow/OrderRow";
 
 import { getUserOrders } from "../../services/order";
 
@@ -56,31 +55,8 @@ function Orders(props: Props) {
     <div>
       <h4>Orders</h4>
       {orders?.map((order: TOrder) => {
-        const date = new Date(order.Date);
-        let totalPrice = 0;
-        order.Basket.forEach((orderItem: any) => {
-          totalPrice += orderItem.Price * orderItem.Quantity;
-        })
-
         return (
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-            >
-              <Typography>{date.toLocaleString().replace(',', '').slice(0, -3)} - £{totalPrice.toFixed(2)}</Typography>
-            </ExpansionPanelSummary>
-
-            <ExpansionPanelDetails>
-              <div>
-                {order.Basket.map((orderItem: any) => {
-                  return (
-                    <OrderRow orderItem={orderItem} />
-                  )
-                })}
-              </div>
-            </ExpansionPanelDetails>
-
-          </ExpansionPanel>
+          <OrderRow order={order} />
         )
       })}
     </div>

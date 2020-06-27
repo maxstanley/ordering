@@ -14,6 +14,7 @@ import TBasket, { BasketItem } from './types/Basket';
 
 import './App.css';
 import { Login } from './pages/Login/Login';
+import CustomerOrders from './pages/CustomerOrders/CustomerOrders';
 
 const publicKey: string = process.env.REACT_APP_PUBLIC_KEY!;
 
@@ -65,7 +66,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <NavBar basketQuantity={basketQuantity} />
+        <NavBar account={account} basketQuantity={basketQuantity} />
         <Switch>
           <Route exact path="/">
             <Home basket={basket} updateBasketItem={updateBasketItem} />
@@ -75,6 +76,9 @@ function App() {
           </Route>
           <Route exact path="/basket">
             <Basket account={account} basket={basket} updateBasketItem={updateBasketItem} basketTotal={basketTotal} />
+          </Route>
+          <Route exact path="/customerorders">
+            <CustomerOrders />
           </Route>
           <Route exact path="/login">
             <Login account={account} handleAccountCookies={handleAccountCookies} />
