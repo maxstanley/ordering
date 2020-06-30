@@ -78,7 +78,7 @@ function App() {
             <Basket account={account} basket={basket} updateBasketItem={updateBasketItem} basketTotal={basketTotal} />
           </Route>
           <Route exact path="/customerorders">
-            <CustomerOrders />
+            <CustomerOrders account={account} />
           </Route>
           <Route exact path="/login">
             <Login account={account} handleAccountCookies={handleAccountCookies} />

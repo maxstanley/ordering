@@ -3,7 +3,7 @@ import * as HTTPStatus from "http-status-codes";
 import { v4 as uuid } from "uuid";
 
 import IController from "../interfaces/IController";
-import { createOrder, getAllOrders, getOrderByUser } from "../services/order";
+import { createOrder, getAllOrders, getOrderByUser, updateOrder } from "../services/order";
 import Order from "../models/order";
 import TOrder from "../types/Order";
 
@@ -13,6 +13,7 @@ class OrderController implements IController {
   public router: Router;
 
   private clients: { id: string, response: Response }[] = [];
+  private customers: { id: string, response: Response }[] = [];
 
   constructor() {
     this.path = "/v1";
@@ -27,6 +28,10 @@ class OrderController implements IController {
     // Create an order
     this.router.post("/order", this.createOrder);
 
+    // Update an order
+    this.router.put("/order", this.updateOrder);
+
+    // Stream of new orders
     this.router.get("/order/stream", this.orderStream);
   }
 
@@ -52,6 +57,14 @@ class OrderController implements IController {
     return this.sendEventToAll(order);
   };
 
+  updateOrder = async (request: Request, response: Response) => {
+    const newOrder = new Order(request.body);
+    updateOrder(request.body);
+
+    response.status(HTTPStatus.NO_CONTENT).send();
+    return this.sendEventToClient(newOrder)
+  };
+
   // https://www.digitalocean.com/community/tutorials/nodejs-server-sent-events-build-realtime-app
   orderStream = async (request: Request, response: Response) => {
     const headers = {
@@ -63,14 +76,31 @@ class OrderController implements IController {
     response.status(HTTPStatus.OK).set(headers);
     response.write(`data: "Connection Created"\n\n`);
 
-    const client = {
-      id: uuid(),
-      response,
-    };
-    this.clients.push(client);
+    let id: string;
+
+    if (request.query.customer) {
+      id = request.account!.AccountID
+      console.log("Customer Stream: ", id)
+      const customer = {
+        id,
+        response,
+      };
+      this.customers.push(customer);
+    } else if (request.account?.IsAdmin) {
+      console.log("Admin Stream")
+      id = uuid();
+      const client = {
+        id,
+        response,
+      };
+      this.clients.push(client);
+    } else {
+      return response.status(HTTPStatus.BAD_REQUEST).send();
+    }
 
     request.on("close", () => {
-      this.clients = this.clients.filter(c => c.id !== client.id);
+      this.clients = this.clients.filter(c => c.id !== id);
+      console.log("Connection Closed:", id);
     });
   };
 
@@ -79,6 +109,13 @@ class OrderController implements IController {
       c.response.write(`data: ${JSON.stringify(order)}\n\n`);
     });
   };
+
+  sendEventToClient = async (order: TOrder) => {
+    this.customers.forEach((customer) => {
+      if (order.UserID !== customer.id) { return; }
+      customer.response.write(`data: ${JSON.stringify(order)}\n\n`);
+    });
+  }
 }
 
 export default OrderController;

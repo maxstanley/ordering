@@ -3,7 +3,7 @@ import Account from "../models/account";
 
 import { createHash, randomBytes } from "crypto";
 
-const createAccount = async (DisplayName: string, Email: string, Password: string, IsAdmin: Boolean, ActivationID: string) => {
+export const createAccount = async (DisplayName: string, Email: string, Password: string, IsAdmin: Boolean, ActivationID: string) => {
   await Account.create({
     DisplayName,
     Email,
@@ -13,7 +13,7 @@ const createAccount = async (DisplayName: string, Email: string, Password: strin
   });
 }
 
-const checkAccountDetails = async (Email: string, Password: string) => {
+export const checkAccountDetails = async (Email: string, Password: string) => {
   const user = await Account.findOne({ Email });
 
   if (user === null) { return undefined; }
@@ -24,7 +24,7 @@ const checkAccountDetails = async (Email: string, Password: string) => {
   return undefined;
 }
 
-const activateAccount = async (ActivationID: string) => {
+export const activateAccount = async (ActivationID: string) => {
   await Account.findOneAndUpdate({ ActivationID }, {
     $set: {
       EmailIsValidated: true
@@ -34,7 +34,7 @@ const activateAccount = async (ActivationID: string) => {
   return;
 };
 
-const hashString = (string: string, salt?: string) => {
+export const hashString = (string: string, salt?: string) => {
   if (!salt) {
     salt = randomBytes(12).toString("base64");
   }
@@ -46,11 +46,4 @@ const hashString = (string: string, salt?: string) => {
     Hash: hash.digest("hex"),
     Salt: salt
   };
-}
-
-export {
-  activateAccount,
-  createAccount,
-  checkAccountDetails,
-  hashString
 }

@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import OrderRow from "../../Components/OrderRow/OrderRow";
 
 import { getAllOrders } from "../../services/order";
 import TOrder from "../../types/Order";
+import TAccount from "../../types/Account";
 
 interface Props {
+  account: TAccount | undefined;
 }
 
 function CustomerOrders(props: Props) {
+  const { account } = props;
+  const history = useHistory();
 
   const [ orders, setOrders ] = useState<TOrder[]>([]);
   const [ newOrder, setNewOrder ] = useState<TOrder | undefined>(undefined);
 
   let events: EventSource;
 
-
   useEffect(() => {
+    if (!account) {
+      return history.push("/login?redirect=customerorders");
+    } else if (!account.IsAdmin) {
+      return history.push('/');
+    }
+    
     const fetchData = async () => {
       setOrders(await getAllOrders());
     };
@@ -45,7 +55,7 @@ function CustomerOrders(props: Props) {
       <h3>Customer Orders</h3>
       {orders.map((order: TOrder) => {
         return (
-          <OrderRow order={order} />
+          <OrderRow order={order} canChangeStatus={true} />
         )
       })}
     </div>

@@ -11,6 +11,11 @@ const orderSchema = new Schema({
     type: Date,
     required: true,
   },
+  Status: {
+    type: String,
+    enum: [ "PENDING", "PREPARING", "READY", "COLLECTED", "CANCELLED" ],
+    default: "PENDING"
+  },
   Basket: [{
     ProductID: {
       type: String

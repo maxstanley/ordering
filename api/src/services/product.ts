@@ -1,7 +1,7 @@
 import Product from "../models/product";
 import TProduct from "../types/Product";
 
-const getAllProducts = async () => {
+export const getAllProducts = async () => {
   const products = await Product.aggregate([
     {
       $group: {
@@ -28,8 +28,4 @@ const getAllProducts = async () => {
   });
   
   return output;
-}
-
-export {
-  getAllProducts
 }

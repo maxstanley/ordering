@@ -11,7 +11,7 @@ function OrderRow(props: Props) {
 
   return (
     <div>
-      <p>{Name} - {Measure} - {Quantity}</p>
+      <p>{Quantity} x {Measure} of {Name}</p>
     </div>
   )
 }

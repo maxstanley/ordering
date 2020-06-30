@@ -1,13 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  Typography
-} from "@material-ui/core";
-import {
-  ExpandMore as ExpandMoreIcon,
-} from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 
 import Loading from "../../Components/Loading/Loading";
@@ -16,19 +7,21 @@ import OrderRow from "../../Components/OrderRow/OrderRow";
 import { getUserOrders } from "../../services/order";
 
 import TOrder from "../../types/Order";
-import Account from "../../types/Account";
+import TAccount from "../../types/Account";
 
 interface Props {
-  account: Account | undefined;
+  account: TAccount | undefined;
 }
 
 function Orders(props: Props) {
   const { account } = props;
   const history = useHistory();
 
-  const [ orders, setOrders ] = useState<TOrder[]>();
+  const [ orders, setOrders ] = useState<TOrder[]>([]);
+  const [ newOrder, setNewOrder ] = useState<TOrder | undefined>(undefined);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
-  // const [ totalPrice, setTotalPrice ] = useState<number>(0);
+  
+  let events: EventSource;
 
   useEffect(() => {
     if (!account) {
@@ -41,6 +34,16 @@ function Orders(props: Props) {
     }
 
     getData();
+
+    events = new EventSource("/api/v1/order/stream?customer=true", {
+      withCredentials: true
+    });
+
+    events.onmessage = (event) => {
+      const order = JSON.parse(event.data);
+      if (order === "Connection Created") { return; }
+      setNewOrder(order);
+    };
   }, []);
 
   useEffect(() => {
@@ -49,14 +52,25 @@ function Orders(props: Props) {
     }
   }, [orders]);
 
+  useEffect(() => {
+    if (!newOrder) { return; }
+    const newOrders = [...orders];
+    newOrders.some((order, index) => {
+      if (order._id !== newOrder._id) { return false; }
+      newOrders[index] = newOrder;
+      return true;
+    });
+    setOrders(newOrders);
+  }, [newOrder])
+
   if (isLoading) { return <Loading /> }
 
   return (
     <div>
       <h4>Orders</h4>
-      {orders?.map((order: TOrder) => {
+      {orders!.map((order: TOrder) => {
         return (
-          <OrderRow order={order} />
+          <OrderRow order={order} canChangeStatus={false} />
         )
       })}
     </div>

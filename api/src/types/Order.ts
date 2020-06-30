@@ -4,7 +4,8 @@ interface Order extends Document {
   ID: string;
   UserID: string;
   Date: Date;
-  basket: { [ProductID: string]: ProductOrder };
+  Status: Status;
+  Basket: { [ProductID: string]: ProductOrder };
 };
 
 interface ProductOrder {
@@ -14,5 +15,13 @@ interface ProductOrder {
   Price: number;
   Quantity: number;
 };
+
+export enum Status {
+  PENDING = "PENDING",
+  PREPARING = "PREPARING",
+  READY = "READY",
+  COLLECTED = "COLLECTED",
+  CANCELLED = "CANCELLED"
+}
 
 export default Order;

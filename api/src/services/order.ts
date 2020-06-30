@@ -1,10 +1,11 @@
 import Order from "../models/order";
+import TOrder from "../types/Order";
 
-const getAllOrders = async () => {
+export const getAllOrders = async () => {
   return await Order.find({}).sort({ Date: -1 });
 }
 
-const getOrderByUser = async (UserID: string) => {
+export const getOrderByUser = async (UserID: string) => {
   return await Order.aggregate([
     {
       $match: {
@@ -19,12 +20,10 @@ const getOrderByUser = async (UserID: string) => {
   ]);
 }
 
-const createOrder = async (order: any) => {
-  await Order.create(order);
+export const createOrder = async (order: TOrder) => {
+  return await Order.create(order);
 }
 
-export {
-  getAllOrders,
-  getOrderByUser,
-  createOrder
+export const updateOrder = async (order: TOrder) => {
+  return await Order.findOneAndUpdate({ _id: order._id }, order);
 }

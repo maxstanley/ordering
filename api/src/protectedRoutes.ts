@@ -15,6 +15,7 @@ const protectedRoutes: any = {
     order: {
       GET: true,
       POST: true,
+      PUT: true,
       stream: {
         GET: true
       },

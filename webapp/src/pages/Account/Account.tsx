@@ -19,11 +19,10 @@ function Account(props: Props) {
   const { account, handleAccountCookies } = props;
   const history = useHistory();
 
-  // const [ cookies , , removeCookies ] = useCookies(["token"]);
-
   const logout = async () => {
     Cookies.remove("token");
     await logoutRequest();
+    Cookies.remove("token");
     handleAccountCookies()
     history.push("/");
   };
