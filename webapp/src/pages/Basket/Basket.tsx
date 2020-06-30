@@ -38,7 +38,7 @@ function Basket(props: Props) {
       return;
     }
     
-    const checkedOut = await checkoutBasket(account.AccountID, basket, message);
+    const checkedOut = await checkoutBasket(account, basket, message);
 
     if (checkedOut) {
       updateBasketItem(undefined);

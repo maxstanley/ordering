@@ -35,15 +35,17 @@ function Orders(props: Props) {
 
     getData();
 
-    events = new EventSource("/api/v1/order/stream?customer=true", {
-      withCredentials: true
-    });
+    if (!events) {
+      events = new EventSource("/api/v1/order/stream?customer=true", {
+        withCredentials: true
+      });
 
-    events.onmessage = (event) => {
-      const order = JSON.parse(event.data);
-      if (order === "Connection Created") { return; }
-      setNewOrder(order);
-    };
+      events.onmessage = (event) => {
+        const order = JSON.parse(event.data);
+        if (order === "Connection Created") { return; }
+        setNewOrder(order);
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -55,6 +57,7 @@ function Orders(props: Props) {
   useEffect(() => {
     if (!newOrder) { return; }
     const newOrders = [...orders];
+    console.log(newOrders, newOrder)
     newOrders.some((order, index) => {
       if (order._id !== newOrder._id) { return false; }
       newOrders[index] = newOrder;

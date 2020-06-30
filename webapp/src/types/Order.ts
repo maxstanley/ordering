@@ -2,6 +2,7 @@ interface Order {
   _id: string;
   ID: string;
   UserID: string;
+  DisplayName: string;
   Date: Date;
   Status: Status;
   Message?: String;

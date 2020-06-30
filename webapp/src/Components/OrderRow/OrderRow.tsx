@@ -111,7 +111,7 @@ function Orders(props: Props) {
         expandIcon={<ExpandMoreIcon />}
         onClick={togglePanel}
       >
-        <Typography>{("0" + date.getDate()).slice(-2)}/{("0" + date.getMonth()).slice(-2)} - £{totalPrice.toFixed(2)}</Typography>
+        <Typography>{("0" + date.getDate()).slice(-2)}/{("0" + date.getMonth()).slice(-2)} - {order.DisplayName} - £{totalPrice.toFixed(2)}</Typography>
         {getStatus()}{(canChangeStatus) ? renderMenu : null}
       </ExpansionPanelSummary>
 

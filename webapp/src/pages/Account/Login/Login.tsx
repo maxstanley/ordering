@@ -7,9 +7,9 @@ import {
   Typography
 } from "@material-ui/core";
 
-import { loginRequest } from "../../services/account";
+import { loginRequest } from "../../../services/account";
 
-import Account from "../../types/Account";
+import Account from "../../../types/Account";
 
 interface Props  {
   handleAccountCookies(): void;
@@ -17,7 +17,7 @@ interface Props  {
 }
 
 // https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-in
-export function Login(props: Props) {
+export default function Login(props: Props) {
   const { account, handleAccountCookies } = props;
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
@@ -56,13 +56,14 @@ export function Login(props: Props) {
 
   useEffect(() => {
     if (account) {
-      if (query.get("redirect")) {
-        history.push(`/${query.get("redirect")}`);
-        return;
-      }
+      window.location.reload();
+      // if (query.get("redirect")) {
+      //   history.push(`/${query.get("redirect")}`);
+      //   return;
+      // }
 
-      history.push("/");
-      return;
+      // history.push("/");
+      // return;
     }
     
     handleAccountCookies();
@@ -73,6 +74,7 @@ export function Login(props: Props) {
       <br />
       <Typography variant="h5">Sign In</Typography>
       <TextField
+        tabIndex={1}
         variant="outlined"
         margin="normal"
         required
@@ -87,6 +89,7 @@ export function Login(props: Props) {
         onChange={handleEmailChange}
       />
       <TextField
+        tabIndex={2}
         variant="outlined"
         margin="normal"
         required
@@ -95,7 +98,7 @@ export function Login(props: Props) {
         name="password"
         label="Password"
         type="password"
-        autoFocus
+        // autoFocus
         className="textField"
         value={password}
         error={badAuth}
@@ -103,6 +106,7 @@ export function Login(props: Props) {
       />
       <Typography hidden={!badAuth} color="secondary">Username and/or password incorrect</Typography>
       <Button
+        tabIndex={3}
         fullWidth
         variant="contained"
         color="primary"

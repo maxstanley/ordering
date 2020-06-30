@@ -52,9 +52,9 @@ class AccountController implements IController {
   }
 
   createAccount = async (request: Request, response: Response) => {
-    const { DisplayName, Email, Password, IsAdmin } = request.body;
+    const { DisplayName, Email, Password } = request.body;
     const ActivationID = uuid();
-    await createAccount(DisplayName, Email, Password, IsAdmin, ActivationID);
+    await createAccount(DisplayName, Email, Password, false, ActivationID);
 
     this.transport.sendMail({
       from: process.env.EMAIL_USER,

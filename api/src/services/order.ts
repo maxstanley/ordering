@@ -21,7 +21,7 @@ export const getOrderByUser = async (UserID: string) => {
 }
 
 export const createOrder = async (order: TOrder) => {
-  return await Order.create(order);
+  return await order.save();
 }
 
 export const updateOrder = async (order: TOrder) => {

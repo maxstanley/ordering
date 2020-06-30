@@ -7,6 +7,10 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
+  DisplayName: {
+    type: String,
+    required: true,
+  },
   Date: {
     type: Date,
     required: true,

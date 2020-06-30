@@ -51,7 +51,7 @@ class OrderController implements IController {
 
   createOrder = async (request: Request, response: Response) => {
     const order = new Order(request.body);
-    createOrder(request.body);
+    createOrder(order);
     
     response.status(HTTPStatus.CREATED).send();
     return this.sendEventToAll(order);

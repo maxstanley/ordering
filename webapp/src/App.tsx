@@ -13,7 +13,6 @@ import TAccount from "./types/Account";
 import TBasket, { BasketItem } from './types/Basket';
 
 import './App.css';
-import { Login } from './pages/Login/Login';
 import CustomerOrders from './pages/CustomerOrders/CustomerOrders';
 
 const publicKey: string = process.env.REACT_APP_PUBLIC_KEY!;
@@ -79,9 +78,6 @@ function App() {
           </Route>
           <Route exact path="/customerorders">
             <CustomerOrders account={account} />
-          </Route>
-          <Route exact path="/login">
-            <Login account={account} handleAccountCookies={handleAccountCookies} />
           </Route>
           <Route exact path="/order">
             <Orders account={account} />
