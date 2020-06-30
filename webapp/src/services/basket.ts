@@ -2,7 +2,7 @@ import Basket from "../types/Basket";
 
 const URL = process.env.REACT_APP_API_URL;
 
-export async function checkoutBasket(UserID: string, Basket: Basket) {
+export async function checkoutBasket(UserID: string, Basket: Basket, Message: String | undefined) {
   let basketArray: any[] = [];
   
   Object.keys(Basket).forEach((id: string) => {
@@ -18,7 +18,8 @@ export async function checkoutBasket(UserID: string, Basket: Basket) {
     body: JSON.stringify({
       UserID,
       Date: new Date(),
-      Basket: basketArray
+      Basket: basketArray,
+      Message,
     })
   };
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from '@material-ui/core';
+import React, { useState, ChangeEvent } from "react";
+import { Button, TextareaAutosize } from '@material-ui/core';
 import { ShoppingCart as ShoppingCartIcon } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 
@@ -7,6 +7,8 @@ import ProductMeasure from "../../Components/ProductMeasure/ProductMeasure";
 import TBasket, { BasketItem } from "../../types/Basket";
 import Account from "../../types/Account";
 import { checkoutBasket } from "../../services/basket";
+
+import "./Basket.css";
 
 interface Props {
   account: Account | undefined;
@@ -19,6 +21,12 @@ function Basket(props: Props) {
   const { account, basket, updateBasketItem, basketTotal } = props;
   const history = useHistory();
 
+  const [ message, setMessage ] = useState<string>();
+
+  const handleMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value)
+  };
+
   const handleCheckout = async () => {
     if (Object.keys(basket).length === 0) { 
       history.push('/');
@@ -30,7 +38,7 @@ function Basket(props: Props) {
       return;
     }
     
-    const checkedOut = await checkoutBasket(account.AccountID, basket);
+    const checkedOut = await checkoutBasket(account.AccountID, basket, message);
 
     if (checkedOut) {
       updateBasketItem(undefined);
@@ -55,6 +63,20 @@ function Basket(props: Props) {
         )
       })}
       <p>£{basketTotal.toFixed(2)}</p>
+      <TextareaAutosize
+        // variant="outlined"
+        // margin="normal"
+        required
+        // fullWidth
+        id="message"
+        name="message"
+        placeholder="Message: Optional"
+        autoFocus
+        className="messageField"
+        value={message}
+        onChange={handleMessageChange}
+      />
+      <br />
       <Button
         variant="contained"
         color="default"

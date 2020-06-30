@@ -1,7 +1,7 @@
 db.createCollection("Order")
 
 const date1 = new Date(2020, 05, 23, 17, 01);
-db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date1, "Status": "PENDING", "Basket": [
+db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date1, "Status": "PENDING", "Message": "message", "Basket": [
   {
     "Measure": "Pint",
     "Name": "Beer 1",
@@ -12,7 +12,7 @@ db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date1, "Status":
 ]})
 
 const date2 = new Date(2020, 05, 23, 18, 53);
-db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date2, "Status": "PREPARING", "Basket": [
+db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date2, "Status": "PREPARING", "Message": "message", "Basket": [
   {
     "Measure": "Pint",
     "Name": "Beer 1",
@@ -30,7 +30,7 @@ db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date2, "Status":
 ]})
 
 const date3 = new Date(2020, 05, 23, 16, 46);
-db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date3, "Status": "READY", "Basket": [
+db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date3, "Status": "READY", "Message": "message", "Basket": [
   {
     "Measure": "Pint",
     "Name": "Beer 1",
@@ -41,7 +41,7 @@ db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date3, "Status":
 ]})
 
 const date4 = new Date(2020, 05, 23, 16, 52);
-db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date4, "Status": "COLLECTED", "Basket": [
+db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date4, "Status": "COLLECTED", "Message": "message", "Basket": [
   {
     "Measure": "Pint",
     "Name": "Beer 1",
@@ -52,7 +52,7 @@ db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date4, "Status":
 ]})
 
 const date5 = new Date(2020, 05, 23, 16, 58);
-db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date5, "Status": "CANCELLED", "Basket": [
+db.Order.insert({ "UserID": "5ef4e40c47c32c01026d051b", "Date": date5, "Status": "CANCELLED", "Message": "message", "Basket": [
   {
     "Measure": "Pint",
     "Name": "Beer 1",

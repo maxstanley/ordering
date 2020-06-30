@@ -4,6 +4,7 @@ interface Order {
   UserID: string;
   Date: Date;
   Status: Status;
+  Message?: String;
   Basket: { [ProductID: string]: ProductOrder };
 };
 

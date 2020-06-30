@@ -5,6 +5,7 @@ interface Order extends Document {
   UserID: string;
   Date: Date;
   Status: Status;
+  Message?: String;
   Basket: { [ProductID: string]: ProductOrder };
 };
 

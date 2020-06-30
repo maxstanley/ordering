@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./OrderItem.css";
+
 interface Props {
   orderItem: any;
 }
@@ -10,9 +12,7 @@ function OrderRow(props: Props) {
   const { Name, Measure, Quantity } = orderItem;
 
   return (
-    <div>
-      <p>{Quantity} x {Measure} of {Name}</p>
-    </div>
+    <p className="text">{Quantity} x {Measure} of {Name}</p>
   )
 }
 

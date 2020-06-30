@@ -118,6 +118,7 @@ function Orders(props: Props) {
 
       <ExpansionPanelDetails>
         <div>
+          {(order.Message) ? <p className="text"><b>Message: </b>{order.Message}</p> : null}
           {Object.keys(order.Basket).map((orderItemKey: any) => {
             const orderItem = order.Basket[orderItemKey];
             return (

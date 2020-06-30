@@ -22,3 +22,7 @@
   min-width: 85px;
   margin-left: auto !important;
 }
+
+.text {
+  text-align: left;
+}
